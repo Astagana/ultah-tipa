@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1c0822">
+  <title>Selamat ulang tahun, sayang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="terkunci">
+
+  <!-- ikon yang dipakai berulang -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gradHati" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff8fae"/>
+        <stop offset="1" stop-color="#e2245b"/>
+      </linearGradient>
+      <symbol id="ikon-hati" viewBox="0 0 100 90">
+        <path d="M50 86 C22 64 4 47 4 28 C4 14 15 4 28 4 C38 4 46 9 50 17 C54 9 62 4 72 4 C85 4 96 14 96 28 C96 47 78 64 50 86 Z" fill="url(#gradHati)"/>
+        <path d="M17 24 C18 16 24 11 31 12" stroke="rgba(255,255,255,.6)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <canvas id="latar" aria-hidden="true"></canvas>
+  <canvas id="efek" aria-hidden="true"></canvas>
+
+  <!-- taruh lagu kamu di folder yang sama, namanya song.mp3 -->
+  <audio id="lagu" src="song.mp3" loop preload="auto"></audio>
+
+  <!-- pertanyaan pertama -->
+  <div id="gerbang" role="dialog" aria-modal="true" aria-labelledby="tanya">
+    <div class="gerbang-isi">
+      <svg class="hati-kecil" viewBox="0 0 100 90" aria-hidden="true"><use href="#ikon-hati"/></svg>
+      <h1 id="tanya">Kamu masih sayang aku engga?</h1>
+      <p id="komentar" class="komentar" aria-live="polite">Jawab jujur ya, aku lagi deg-degan nih.</p>
+      <div class="pilihan">
+        <button id="btnIya" class="tombol utama" type="button">Iya, masih dong</button>
+        <button id="btnTidak" class="tombol tepi" type="button">Tidak</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- tombol pojok -->
+  <button id="btnMenu" class="ikon-tombol kiri" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="sidebar">
+    <span class="garis"></span><span class="garis"></span><span class="garis"></span>
+  </button>
+  <button id="btnMusik" class="ikon-tombol kanan" type="button" aria-label="Putar atau jeda lagu">
+    <svg class="ikon-putar" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+    <svg class="ikon-jeda" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+  </button>
+
+  <!-- sidebar -->
+  <div id="tirai"></div>
+  <aside id="sidebar" aria-label="Menu">
+    <div class="sb-kepala">
+      <svg viewBox="0 0 100 90" aria-hidden="true"><use href="#ikon-hati"/></svg>
+      <p class="sb-judul">Untuk <span data-nama>Tipa</span></p>
+      <p class="sb-sub">dari <span data-dari>Dias</span>, dengan sepenuh hati</p>
+    </div>
+
+    <nav class="sb-nav" aria-label="Bagian halaman">
+      <a href="#beranda">Beranda</a>
+      <a href="#lilin">Tiup lilin</a>
+      <a href="#alasan">Alasan aku mencintaimu</a>
+      <a href="#surat">Surat untukmu</a>
+      <a href="#game">Cocokkan hati</a>
+      <a href="#kupon">Kupon dari aku</a>
+    </nav>
+
+    <div class="sb-musik">
+      <p class="sb-label">Lagu kita</p>
+      <button id="btnPutar" class="tombol tepi kecil" type="button">
+        <svg class="ikon-putar" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+        <svg class="ikon-jeda" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+        <span id="labelPutar">Putar lagu</span>
+      </button>
+      <label class="volume">
+        <span>Volume</span>
+        <input id="volume" type="range" min="0" max="100" value="65">
+      </label>
+    </div>
+
+    <div class="sb-atur">
+      <label class="saklar"><input id="saklarKelopak" type="checkbox" checked><span class="rel"></span>Kelopak mawar jatuh</label>
+      <label class="saklar"><input id="saklarJejak" type="checkbox" checked><span class="rel"></span>Jejak hati di kursor</label>
+    </div>
+
+    <p class="sb-kaki">Ketuk di mana saja, ada kejutan kecil.</p>
+  </aside>
+
+  <main>
+
+    <!-- beranda -->
+    <section id="beranda" class="hero halaman">
+      <div class="hero-isi">
+        <div class="hati-pembungkus">
+          <button id="hatiBesar" class="hati-besar" type="button" aria-label="Sentuh hatinya">
+            <svg viewBox="0 0 100 90" aria-hidden="true"><use href="#ikon-hati"/></svg>
+          </button>
+        </div>
+        <h2 class="judul">
+          <span class="baris1">Selamat ulang tahun,</span>
+          <span class="baris2" data-nama>Tipa</span>
+        </h2>
+        <p class="sapa">Website kecil ini aku bikin sendiri, khusus buat kamu. Hari ini giliran kamu yang dimanjakan.</p>
+        <p class="sapa">Klik garik 3 di atas kanan.</p>
+        <p id="hitunganHati" class="hitungan" aria-live="polite">Sentuh hatinya, dia berdebar dari tadi.</p>
+      </div>
+    </section>
+
+    <!-- kue -->
+    <section id="lilin" class="bagian halaman">
+      <h2>Tiup lilinnya</h2>
+      <p class="pengantar">Pejamkan mata, bikin satu permintaan, lalu sentuh apinya satu-satu.</p>
+
+      <div class="panggung-kue">
+        <svg id="kue" viewBox="0 0 320 300" role="group" aria-label="Kue ulang tahun dengan tiga lilin">
+          <ellipse cx="160" cy="270" rx="140" ry="14" fill="#f3d3de" opacity=".85"/>
+          <rect x="52" y="168" width="216" height="98" rx="14" fill="#ff7fa6"/>
+          <path d="M52 178 q18 24 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 V166 H52 Z" fill="#fff0ec"/>
+          <text x="160" y="232" text-anchor="middle" font-family="Caveat, cursive" font-size="34" font-weight="700" fill="#fff0ec">Selamat ultah</text>
+          <circle cx="76" cy="248" r="4" fill="#ffd27f"/><circle cx="102" cy="254" r="3" fill="#fff0ec"/>
+          <circle cx="218" cy="254" r="3" fill="#fff0ec"/><circle cx="244" cy="248" r="4" fill="#ffd27f"/>
+          <rect x="90" y="102" width="140" height="70" rx="12" fill="#ffb3c8"/>
+          <path d="M90 114 q17.5 22 35 0 t35 0 t35 0 t35 0 V102 H90 Z" fill="#fff0ec"/>
+          <text x="125" y="152" text-anchor="middle" font-size="16" fill="#fff0ec">♥</text>
+          <text x="160" y="158" text-anchor="middle" font-size="16" fill="#fff0ec">♥</text>
+          <text x="195" y="152" text-anchor="middle" font-size="16" fill="#fff0ec">♥</text>
+
+          <g class="lilin" tabindex="0" role="button" aria-label="Lilin pertama, sentuh untuk meniup">
+            <rect x="121" y="66" width="8" height="40" rx="3" fill="#ffd27f"/>
+            <rect x="121" y="76" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <rect x="121" y="90" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <g transform="translate(125 62)">
+              <g class="api">
+                <circle class="halo" cx="0" cy="-10" r="17"/>
+                <path class="luar" d="M0 -26 C10 -12 9 -2 0 5 C-9 -2 -10 -12 0 -26 Z"/>
+                <path class="dalam" d="M0 -14 C4 -8 4 -3 0 1 C-4 -3 -4 -8 0 -14 Z"/>
+              </g>
+              <path class="asap" d="M0 0 c8 -8 -8 -16 0 -24 c8 -8 -8 -16 0 -24"/>
+              <circle cx="0" cy="-14" r="24" fill="rgba(0,0,0,0)"/>
+            </g>
+          </g>
+
+          <g class="lilin" tabindex="0" role="button" aria-label="Lilin kedua, sentuh untuk meniup">
+            <rect x="156" y="66" width="8" height="40" rx="3" fill="#ffd27f"/>
+            <rect x="156" y="78" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <rect x="156" y="92" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <g transform="translate(160 62)">
+              <g class="api">
+                <circle class="halo" cx="0" cy="-10" r="17"/>
+                <path class="luar" d="M0 -26 C10 -12 9 -2 0 5 C-9 -2 -10 -12 0 -26 Z"/>
+                <path class="dalam" d="M0 -14 C4 -8 4 -3 0 1 C-4 -3 -4 -8 0 -14 Z"/>
+              </g>
+              <path class="asap" d="M0 0 c8 -8 -8 -16 0 -24 c8 -8 -8 -16 0 -24"/>
+              <circle cx="0" cy="-14" r="24" fill="rgba(0,0,0,0)"/>
+            </g>
+          </g>
+
+          <g class="lilin" tabindex="0" role="button" aria-label="Lilin ketiga, sentuh untuk meniup">
+            <rect x="191" y="66" width="8" height="40" rx="3" fill="#ffd27f"/>
+            <rect x="191" y="74" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <rect x="191" y="88" width="8" height="5" fill="#fff0ec" opacity=".7"/>
+            <g transform="translate(195 62)">
+              <g class="api">
+                <circle class="halo" cx="0" cy="-10" r="17"/>
+                <path class="luar" d="M0 -26 C10 -12 9 -2 0 5 C-9 -2 -10 -12 0 -26 Z"/>
+                <path class="dalam" d="M0 -14 C4 -8 4 -3 0 1 C-4 -3 -4 -8 0 -14 Z"/>
+              </g>
+              <path class="asap" d="M0 0 c8 -8 -8 -16 0 -24 c8 -8 -8 -16 0 -24"/>
+              <circle cx="0" cy="-14" r="24" fill="rgba(0,0,0,0)"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <p id="pesanKue" class="pesan-kue" aria-live="polite">Tiga lilin, tiga harapan. Sentuh apinya.</p>
+      <div class="baris-tombol">
+        <button id="btnTiup" class="tombol utama" type="button">Tiup semuanya</button>
+        <button id="btnNyala" class="tombol tepi" type="button">Nyalakan lagi</button>
+      </div>
+
+      <form id="formHarapan" class="form-harapan" autocomplete="off">
+        <label for="isiHarapan">Tulis harapanmu tahun ini</label>
+        <div class="kolom-harapan">
+          <input id="isiHarapan" type="text" maxlength="80" placeholder="Aku mau tahun ini...">
+          <button class="tombol utama" type="submit">Kirim ke langit</button>
+        </div>
+      </form>
+      <div id="daftarHarapan" class="daftar-harapan" aria-live="polite"></div>
+    </section>
+
+    <!-- alasan -->
+    <section id="alasan" class="bagian bagian-alasan halaman">
+      <h2>Kenapa aku sayang kamu?</h2>
+      <p class="pengantar">Satu ketukan, satu alasan. Nanti dia terbang sendiri ke langit.</p>
+      <button id="btnAlasan" class="tombol utama besar" type="button">Alasan aku mencintaimu</button>
+      <p id="jumlahAlasan" class="jumlah-alasan" aria-live="polite">Belum ada alasan yang terbang.</p>
+    </section>
+
+    <!-- surat -->
+    <section id="surat" class="bagian halaman">
+      <h2>Ada surat buat kamu</h2>
+      <div class="surat-wrap" id="suratWrap">
+        <button id="amplop" class="amplop" type="button" aria-expanded="false" aria-controls="kertasLuar" aria-label="Buka amplop surat">
+          <span class="badan"></span>
+          <span class="tutup"></span>
+          <span class="segel"><svg viewBox="0 0 100 90" aria-hidden="true"><use href="#ikon-hati"/></svg></span>
+        </button>
+        <p id="petunjukSurat" class="petunjuk">Ketuk amplopnya.</p>
+
+        <div id="kertasLuar" class="kertas-luar">
+          <article class="kertas">
+            <div class="kertas-dalam" id="kertasDalam">
+              <div id="isiSurat"></div>
+              <p id="ttdSurat" class="ttd"></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- game -->
+    <section id="game" class="bagian halaman">
+      <h2>Cocokkan hati</h2>
+      <p class="pengantar">Buka dua kartu, cari pasangannya. Kayak kita, cuma ada satu yang cocok.</p>
+      <div id="papan" class="papan"></div>
+      <p id="statusGame" class="status-game" aria-live="polite"></p>
+      <button id="btnUlang" class="tombol tepi" type="button">Main lagi</button>
+    </section>
+
+    <!-- kupon -->
+    <section id="kupon" class="bagian halaman">
+      <h2>Kupon dari aku</h2>
+      <p class="pengantar">Semuanya berlaku hari ini sampai kapan pun kamu mau. Tinggal tekan tukar.</p>
+      <div id="daftarKupon" class="daftar-kupon"></div>
+      <button id="btnResetKupon" class="tombol tepi kecil" type="button">Kembalikan semua kupon</button>
+    </section>
+
+    <footer class="kaki">
+      <svg viewBox="0 0 100 90" aria-hidden="true"><use href="#ikon-hati"/></svg>
+      <p>Dibuat malam-malam, pakai banyak senyum, oleh <span data-dari>Dias</span> untuk <span data-nama>Tipa</span>.</p>
+    </footer>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
